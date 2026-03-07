@@ -6,6 +6,8 @@ import com.piseth.java.school.phoneshop_night.service.ModelService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @RequiredArgsConstructor
 @Service
 public class ModelServiceImpl implements ModelService {
@@ -15,5 +17,10 @@ public class ModelServiceImpl implements ModelService {
     @Override
     public Model save(Model model) {
         return modelRepository.save(model);
+    }
+
+    @Override
+    public List<Model> getByBrandId(Integer brandId) {
+        return modelRepository.findByBrandId(brandId);
     }
 }

@@ -5,11 +5,16 @@ import java.util.stream.Collectors;
 
 import com.piseth.java.school.phoneshop_night.dto.BrandDTO;
 
+import com.piseth.java.school.phoneshop_night.dto.ModelDTO;
 import com.piseth.java.school.phoneshop_night.dto.PageDTO;
 import com.piseth.java.school.phoneshop_night.entity.Brand;
+import com.piseth.java.school.phoneshop_night.entity.Model;
 import com.piseth.java.school.phoneshop_night.mapper.BrandMapper;
+import com.piseth.java.school.phoneshop_night.mapper.ModelMapper;
 import com.piseth.java.school.phoneshop_night.service.BrandService;
+import com.piseth.java.school.phoneshop_night.service.ModelService;
 import com.piseth.java.school.phoneshop_night.service.impl.BrandServiceImpl;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
@@ -22,16 +27,14 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+@RequiredArgsConstructor
 @RestController
 @RequestMapping("api/brands")
 public class BrandController {
 
-    @Autowired
-    private BrandService brandService;
-
-    public BrandController(BrandService brandService) {
-        this.brandService = brandService;
-    }
+    private final BrandService brandService;
+    private final ModelMapper modelMapper;
+    private final ModelService modelService;
 
     @RequestMapping(method = RequestMethod.POST)
     public ResponseEntity<?> create(@RequestBody BrandDTO brandDTO) {
@@ -71,7 +74,16 @@ public class BrandController {
         Page<Brand> page = brandService.getBrands(params);
         PageDTO pageDTO = new PageDTO(page);
         return  ResponseEntity.ok(pageDTO);
+    }
 
+    @GetMapping("{id}/models")
+    public ResponseEntity<?> getModels(@PathVariable("id") Integer brandId) {
+    List<Model> brands = modelService.getByBrandId(brandId);
+    List<ModelDTO> list = brands
+            .stream()
+            .map(modelMapper::toModelDTO)
+            .toList();
 
+        return ResponseEntity.ok(list);
     }
 }
