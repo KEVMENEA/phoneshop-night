@@ -1,0 +1,18 @@
+databaseChangeLog:
+  - changeSet:
+      id: insert-brands-from-csv
+      author: meneakev@gmail.com
+      changes:
+        - loadData:
+            tableName: brands
+            file: db/changelog/brands.csv
+            separator: ','
+            quotchar: '"'
+            encoding: UTF-8
+            columns:
+              - column:
+                  name: brand_id
+                  type: NUMERIC
+              - column:
+                  name: name
+                  type: STRING
