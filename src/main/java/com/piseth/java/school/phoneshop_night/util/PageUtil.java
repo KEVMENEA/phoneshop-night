@@ -5,35 +5,38 @@ import org.springframework.data.domain.Pageable;
 
 import java.util.Map;
 
-public interface PageUtil {
-    int DEFAULT_PAGE_LIMIT = 2;
-    int DEFAULT_PAGE_NUMBER = 1; // (or 0)
-    String PAGE_LIMIT = "_limit";
-    String PAGE_NUMBER = "_page";
+public class PageUtil {
+    public static final int DEFAULT_PAGE_NUMBER = 1;
+    public static final int DEFAULT_PAGE_LIMIT = 10;
+    public static final String PAGE_NUMBER_PARAM = "page";
+    public static final String PAGE_LIMIT_PARAM = "limit";
 
-    static int getPageLimit(Map<String, String> params) {
-        int pageLimit = DEFAULT_PAGE_LIMIT;
-        if (params.containsKey(PAGE_LIMIT)) {
-            pageLimit = Integer.parseInt(params.get(PAGE_LIMIT));
+    public static int getPageNumber(Map<String, String> params) {
+        if (params.containsKey(PAGE_NUMBER_PARAM)) {
+            try {
+                int page = Integer.parseInt(params.get(PAGE_NUMBER_PARAM));
+                return Math.max(page, 1);
+            } catch (NumberFormatException e) {
+                // Ignore and return default
+            }
         }
-        return pageLimit;
+        return DEFAULT_PAGE_NUMBER;
     }
 
-    static int getPageNumber(Map<String, String> params) {
-        int pageNumber = DEFAULT_PAGE_NUMBER;
-        if (params.containsKey(PAGE_NUMBER)) {
-            pageNumber = Integer.parseInt(params.get(PAGE_NUMBER));
+    public static int getPageLimit(Map<String, String> params) {
+        if (params.containsKey(PAGE_LIMIT_PARAM)) {
+            try {
+                int limit = Integer.parseInt(params.get(PAGE_LIMIT_PARAM));
+                return limit > 0 ? limit : DEFAULT_PAGE_LIMIT;
+            } catch (NumberFormatException e) {
+                // Ignore and return default
+            }
         }
-        return pageNumber;
+        return DEFAULT_PAGE_LIMIT;
     }
 
-    static Pageable getPageable(int pageNumber, int pageSize) {
-        if (pageNumber < 1) {
-            pageNumber = DEFAULT_PAGE_NUMBER;
-        }
-        if (pageSize < 1) {
-            pageSize = DEFAULT_PAGE_LIMIT;
-        }
-        return PageRequest.of(pageNumber - 1, pageSize);
+    public static Pageable getPageable(int pageNumber, int pageLimit) {
+        // Spring Pageable is 0-indexed, so we subtract 1
+        return PageRequest.of(pageNumber - 1, pageLimit);
     }
 }

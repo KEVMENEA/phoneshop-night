@@ -8,9 +8,9 @@ import java.util.List;
 
 
 @Repository
-public interface ModelRepository extends JpaRepository<Model, Integer>
+public interface ModelRepository extends JpaRepository<Model, Long>
 {
 
-    List<Model> findByBrandId(Integer BrandId);
+    List<Model> findBrandById(Long id);
 }
 

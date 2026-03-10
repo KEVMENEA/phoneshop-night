@@ -3,7 +3,7 @@ package com.piseth.java.school.phoneshop_night.dto;
 import lombok.Data;
 
 @Data
-public class ModelDTO {
-    private Long brandId;
-    private String name;
+public class ProductDTO {
+    private Long modelId;
+    private Long colorId;
 }

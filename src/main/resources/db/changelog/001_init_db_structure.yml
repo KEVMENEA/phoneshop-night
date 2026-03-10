@@ -13,7 +13,7 @@ databaseChangeLog:
                   name: brand_id
                   type: BIGINT
               - column:
-                  name: name
+                  name: brand_name
                   type: VARCHAR(50)
         - createTable:
             tableName: models

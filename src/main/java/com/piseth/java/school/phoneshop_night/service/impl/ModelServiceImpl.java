@@ -1,6 +1,7 @@
 package com.piseth.java.school.phoneshop_night.service.impl;
 
 import com.piseth.java.school.phoneshop_night.entity.Model;
+import com.piseth.java.school.phoneshop_night.exception.ResourceNotFoundException;
 import com.piseth.java.school.phoneshop_night.repository.ModelRepository;
 import com.piseth.java.school.phoneshop_night.service.ModelService;
 import lombok.RequiredArgsConstructor;
@@ -20,7 +21,13 @@ public class ModelServiceImpl implements ModelService {
     }
 
     @Override
-    public List<Model> getByBrandId(Integer brandId) {
-        return modelRepository.findByBrandId(brandId);
+    public List<Model> getBrandById(Long id) {
+        return modelRepository.findBrandById(id);
+    }
+
+    @Override
+    public Model getById(Long id) {
+        return modelRepository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("Model", id));
     }
 }

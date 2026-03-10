@@ -1,7 +1,6 @@
 package com.piseth.java.school.phoneshop_night.controller;
 import java.util.List;
 import java.util.Map;
-import java.util.stream.Collectors;
 
 import com.piseth.java.school.phoneshop_night.dto.BrandDTO;
 
@@ -13,9 +12,7 @@ import com.piseth.java.school.phoneshop_night.mapper.BrandMapper;
 import com.piseth.java.school.phoneshop_night.mapper.ModelMapper;
 import com.piseth.java.school.phoneshop_night.service.BrandService;
 import com.piseth.java.school.phoneshop_night.service.ModelService;
-import com.piseth.java.school.phoneshop_night.service.impl.BrandServiceImpl;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -45,13 +42,13 @@ public class BrandController {
     }
 
     @GetMapping("{id}")
-    public ResponseEntity<?> getOneBrand(@PathVariable("id") Integer brandId) {
+    public ResponseEntity<?> getOneBrand(@PathVariable("id") Long brandId) {
         Brand brand = brandService.getById(brandId);
         return ResponseEntity.ok(BrandMapper.INSTANCE.toBrandDTO(brand));
     }
 
     @PutMapping("{id}")
-    public ResponseEntity<?> update(@PathVariable("id") Integer brandId, @RequestBody BrandDTO brandDTO){
+    public ResponseEntity<?> update(@PathVariable("id") Long brandId, @RequestBody BrandDTO brandDTO){
         Brand brand = BrandMapper.INSTANCE.toBrand(brandDTO);
         Brand updatedBrand = brandService.update(brandId, brand);
         return ResponseEntity.ok(BrandMapper.INSTANCE.toBrandDTO(updatedBrand));
@@ -77,8 +74,8 @@ public class BrandController {
     }
 
     @GetMapping("{id}/models")
-    public ResponseEntity<?> getModels(@PathVariable("id") Integer brandId) {
-    List<Model> brands = modelService.getByBrandId(brandId);
+    public ResponseEntity<?> getModels(@PathVariable("id") Long brandId) {
+    List<Model> brands = modelService.getBrandById(brandId);
     List<ModelDTO> list = brands
             .stream()
             .map(modelMapper::toModelDTO)
