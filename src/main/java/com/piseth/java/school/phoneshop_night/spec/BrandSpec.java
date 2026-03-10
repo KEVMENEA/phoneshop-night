@@ -5,15 +5,17 @@ import jakarta.persistence.criteria.CriteriaBuilder;
 import jakarta.persistence.criteria.CriteriaQuery;
 import jakarta.persistence.criteria.Predicate;
 import jakarta.persistence.criteria.Root;
-import lombok.Data;
 import org.springframework.data.jpa.domain.Specification;
 
 import java.util.ArrayList;
 import java.util.List;
 
-@Data
 public class BrandSpec implements Specification<Brand> {
     private final BrandFilter brandFilter;
+
+    public BrandSpec(BrandFilter brandFilter) {
+        this.brandFilter = brandFilter;
+    }
 
     @Override
     public Predicate toPredicate(Root<Brand> root, CriteriaQuery<?> query, CriteriaBuilder cb) {

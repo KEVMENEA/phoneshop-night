@@ -14,5 +14,6 @@ databaseChangeLog:
                   name: brand_id
                   type: NUMERIC
               - column:
-                  name: name
+                  header: name
+                  name: brand_name
                   type: STRING

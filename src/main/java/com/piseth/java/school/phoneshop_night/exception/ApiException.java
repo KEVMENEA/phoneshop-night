@@ -1,15 +1,23 @@
 package com.piseth.java.school.phoneshop_night.exception;
 
-import lombok.Data;
-import lombok.NoArgsConstructor;
-import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 
-@Data
-@RequiredArgsConstructor
-public class ApiException extends RuntimeException{
-    // user want know status code whchc error
+public class ApiException extends RuntimeException {
 
     private final HttpStatus status;
-    private  final String message;
+    private final String message;
+
+    public ApiException(HttpStatus status, String message) {
+        this.status = status;
+        this.message = message;
+    }
+
+    public HttpStatus getStatus() {
+        return status;
+    }
+
+    @Override
+    public String getMessage() {
+        return message;
+    }
 }
