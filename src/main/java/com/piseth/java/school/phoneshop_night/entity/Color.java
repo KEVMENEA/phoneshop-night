@@ -9,10 +9,10 @@ import lombok.Data;
 public class Color {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id")
+    @Column(name = "color_id")
     private Long id;
 
-    @Column(name = "name")
+    @Column(name = "color_name")
     private String name;
 
 

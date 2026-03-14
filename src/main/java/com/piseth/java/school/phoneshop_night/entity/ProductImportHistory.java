@@ -12,7 +12,7 @@ public class ProductImportHistory {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id")
+    @Column(name = "import_id")
     private long id;
 
     @Column(name = "date_import")

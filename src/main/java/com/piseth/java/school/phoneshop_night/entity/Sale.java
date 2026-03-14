@@ -3,6 +3,7 @@ package com.piseth.java.school.phoneshop_night.entity;
 import jakarta.persistence.*;
 import lombok.Data;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 @Data
@@ -15,7 +16,8 @@ public class Sale {
     private Long id;
 
     @Column(name = "sold_date")
-    private LocalDateTime soldDate;
+    private LocalDate soldDate;
 
+    private Boolean active;
 
 }
