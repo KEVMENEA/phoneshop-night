@@ -30,4 +30,7 @@ public class ModelServiceImpl implements ModelService {
         return modelRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Model", id));
     }
+
+    public static class SellSerivce {
+    }
 }

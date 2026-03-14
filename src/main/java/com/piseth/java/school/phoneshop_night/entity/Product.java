@@ -1,6 +1,7 @@
 package com.piseth.java.school.phoneshop_night.entity;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.DecimalMin;
 import lombok.Data;
 
 import java.math.BigDecimal;
@@ -8,7 +9,6 @@ import java.math.BigDecimal;
 @Data
 @Entity
 @Table(name = "products", uniqueConstraints = @UniqueConstraint(columnNames = {"model_id", "color_id"}))
-
 public class Product {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -33,6 +33,7 @@ public class Product {
     private Color color;
 
     @Column(name = "sale_price")
+    @DecimalMin(value = "0.000001", message = "Price must be greater than 0")
     private BigDecimal salePrice;
 
 }

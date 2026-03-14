@@ -1,6 +1,8 @@
 package com.piseth.java.school.phoneshop_night.service.impl;
 
 import com.piseth.java.school.phoneshop_night.dto.ProductImportDTO;
+import com.piseth.java.school.phoneshop_night.dto.ProductSoldDTO;
+import com.piseth.java.school.phoneshop_night.dto.SaleDTO;
 import com.piseth.java.school.phoneshop_night.entity.Product;
 import com.piseth.java.school.phoneshop_night.entity.ProductImportHistory;
 import com.piseth.java.school.phoneshop_night.exception.ResourceNotFoundException;
@@ -11,6 +13,8 @@ import com.piseth.java.school.phoneshop_night.service.ProductService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.math.BigDecimal;
+import java.util.List;
 import java.util.Objects;
 
 @RequiredArgsConstructor
@@ -47,6 +51,24 @@ public class ProductServiceImpl implements ProductService{
         // save import product history
         ProductImportHistory importHistory = productMapper.toProductImportHistory(importDTO, product);
         importHistoryRepository.save(importHistory);
+    }
+
+    @Override
+    public void setSalePrice(Long ProductId, BigDecimal price) {
+        Product product = getById(ProductId);
+        product.setSalePrice(price);
+        productRepository.save(product);
+    }
+
+    @Override
+    public void sale(SaleDTO saleDTO) {
+
+    }
+
+
+    @Override
+    public void validateStock(Long productId, Integer numberOfUnit) {
+
     }
 
 }
